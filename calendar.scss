@@ -1,0 +1,58 @@
+/* CALENDARS AND DATE HANDLING *************************/
+// Note that most of the hcal classes are set via the hcal.js script.
+
+.hcal_tables {
+  table tr td {background:transparent; font-weight:normal; padding:0}
+  thead th {text-align:center}
+  td .calDayLabel {padding:.25em; text-align:center;  border-radius:1em; display:block; color:#333}
+  td.has_events .calDayLabel {font-weight:bold;}
+  td.calDayToday .calDayLabel {background:#222;  }
+}
+// some global calendar classes
+.outOfRange, .notInMonth {opacity:.4}
+
+// small calendars
+#small-calendar {
+  .events, .longDays, .calEventDesc  {display:none}
+  table {font-size:85%;
+    td.has_events {
+      .calDayLabel {background:#222; }
+      .events { position:relative; }
+    }
+    td:hover .events {
+      display:block; 
+      position:absolute;
+      z-index:1000; 
+      background:#666;
+      border:1px solid #444;
+      width:180px;
+      font-size:10px; 
+      padding:2px 4px;
+      text-align:left;
+      // IE9 has an issue with box shadow inside tables with border-collapse set (all of them). This fixes it.
+      border-collapse:separate;
+    }
+  }
+}
+
+// big calendars
+#big-calendar {
+  .abbrDays, .datebox, .eventDetails {display:none}
+  td {width:14.2857%; padding: 0 .5em .5em; border:1px solid #ccc; height:90px; 
+    .calDayLabel {float:right; margin-left:.25em}
+    .event {font-size:70%;}
+    .event:hover .eventDetails {
+      display:block; 
+      position:absolute;
+      z-index:1000; 
+      background:#666;
+      border:1px solid #444;
+      width:180px;
+      font-size:10px; 
+      padding:2px 4px;
+      text-align:left;
+      // IE9 has an issue with box shadow inside tables with border-collapse set (all of them). This fixes it.
+      border-collapse:separate;
+    }
+  }
+}

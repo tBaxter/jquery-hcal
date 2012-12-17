@@ -1,0 +1,20 @@
+/* CALENDARS AND DATE HANDLING *************************/
+.hcal_tables table tr td { background: transparent; font-weight: normal; padding: 0; }
+.hcal_tables thead th { text-align: center; }
+.hcal_tables td .calDayLabel { padding: .25em; text-align: center; border-radius: 1em; display: block; color: #333; }
+.hcal_tables td.has_events .calDayLabel { font-weight: bold; }
+.hcal_tables td.calDayToday .calDayLabel { background: #222; }
+
+.outOfRange, .notInMonth { opacity: .4; }
+
+#small-calendar .events, #small-calendar .longDays, #small-calendar .calEventDesc { display: none; }
+#small-calendar table { font-size: 85%; }
+#small-calendar table td.has_events .calDayLabel { background: #222; }
+#small-calendar table td.has_events .events { position: relative; }
+#small-calendar table td:hover .events { display: block; position: absolute; z-index: 1000; background: #666; border: 1px solid #444; width: 180px; font-size: 10px; padding: 2px 4px; text-align: left; border-collapse: separate; }
+
+#big-calendar .abbrDays, #big-calendar .datebox, #big-calendar .eventDetails { display: none; }
+#big-calendar td { width: 14.2857%; padding: 0 .5em .5em; border: 1px solid #ccc; height: 90px; }
+#big-calendar td .calDayLabel { float: right; margin-left: .25em; }
+#big-calendar td .event { font-size: 70%; }
+#big-calendar td .event:hover .eventDetails { display: block; position: absolute; z-index: 1000; background: #666; border: 1px solid #444; width: 180px; font-size: 10px; padding: 2px 4px; text-align: left; border-collapse: separate; }
