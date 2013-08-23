@@ -6,14 +6,13 @@ var dayAbbrevs = new Array("S", "M", "T", "W", "T", "F", "S");
 var monthNames = new Array ("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December");
 var monthLength = new Array(31,28,31,30,31,30,31,31,30,31,30,31);
 
-var firstDayOfWeek = 0;
 var globalDateHash = {};
-var month_tables = '';
-  
+
 /************************************** helper functions ************************/
 function debug(message) {
-  if (DEBUG && DEBUG ===1)
+  if (DEBUG && DEBUG ===1) {
     console.log(message);
+  }
 }
 
 /* Trims the starting zero off of a number to ensure JS gets a regular int, not an octal */
@@ -49,7 +48,7 @@ function parseDT(dt) {
     debug('dt class:' + dt.attr('class'));
     return;
   }
-  dtSplit = dtText.split('T');  // Split into date/time pair, in case time exists
+  var dtSplit = dtText.split('T');  // Split into date/time pair, in case time exists
   dtDate = dtSplit[0].split('-'); // convert hyphen-separated date to list.
   if (dtDate === null) {
     debug("didn't recognize DT in: " + dtText);
@@ -59,9 +58,9 @@ function parseDT(dt) {
 }
 
 // TODO deal with leap year
-getMonthLength = function(year, month) {
+var getMonthLength = function(year, month) {
   return monthLength[month - 1];
-}
+};
 
 /*********************************************************************
 **  First: check for abilities and readiness
@@ -152,13 +151,14 @@ function addEventHashToGlobalDateHash(eventHash, dateInfo, startDay, endDay) {
 
 //Create Table of the specified Month for the specified Year, with events.
 function makeMonthTable (monthHash, year, month) {
-  currentMonthLength = getMonthLength(year, month);
-  previousMonthLength = getMonthLength(year, month-1);
+  var currentMonthLength = getMonthLength(year, month);
+  var previousMonthLength = getMonthLength(year, month-1);
   var today      = new Date();
   var todayYear  = today.getFullYear();
   var todayMonth = today.getMonth() + 1;
   var todayDay   = today.getDate();
   var days       = new Array(currentMonthLength+1); // We are going to index this array starting at 1.  Because I said so.
+  var dayTd;
   
   // Create an HTML Table to Represent the Month and set necessary Attributes.
   var monthTable =  document.createElement('table');
@@ -213,20 +213,22 @@ function makeMonthTable (monthHash, year, month) {
       $(dayTD).append(eventString + '</div>');
     }
   }
-  var dateToCheck = new Date();
-  dateToCheck.setYear(year);
-  dateToCheck.setDate(1);
-  dateToCheck.setMonth(month-1);
+  var dateToCheck = new Date(year, month-1, 1 );
   var dayOfFirstOfMonth = dateToCheck.getDay();
 
   var row = tbody.appendChild(document.createElement("tr"));
-  // Loop through empty Days before first Day of Month and fill with 'outOfRange' Cells.
+  // Loop through days before first of Month and fill with 'outOfRange' cells.
+  // if unable to retrieve day number (top of year) use empty cell.
   for (i = 0; i < dayOfFirstOfMonth; i++) {
-    $(row).append('<td class="outOfRange"><div class="calDayLabel"> ' + (previousMonthLength - (dayOfFirstOfMonth - i-1)) + '</div></td>');
+    var dayNum = (previousMonthLength - (dayOfFirstOfMonth - i-1));
+    if (isNaN(dayNum)) {
+      dayNum = '';
+    }
+    $(row).append('<td class="outOfRange"><div class="calDayLabel"> ' + dayNum + '</div></td>');
   }
   
   for (i = 1; i <= currentMonthLength; i++) {
-    if (row.childNodes.length == 7) {
+    if (row.childNodes.length === 7) {
       row = tbody.appendChild(document.createElement("tr"));
     }
     if(row.childNodes.length === 0 || row.childNodes.length === 6) {
@@ -235,7 +237,7 @@ function makeMonthTable (monthHash, year, month) {
     row.appendChild(days[i]);
   }
   // fill in next month's days to end
-  newmonth = 1;
+  var newmonth = 1;
   while (row.childNodes.length < 7) {
       $(row).append('<td class="outOfRange"><div class="calDayLabel">' + newmonth + '</div></td>');
   newmonth++;
